@@ -17,15 +17,31 @@
     </header>
 
     <div class="row mt-2">
-        <div class="col text-center">
-            <button>Nuevo Juego</button>
-            <button>Pedir carta</button>
-            <button>Detener</button>
+        <div id="divBotones" class="col text-center">
+            <button id="btnNuevo">Nuevo Juego</button>
+            <button id="btnPedir">Pedir carta</button>
+            <button id="btnDetener">Detener</button>
         </div>
     </div>
 
+    <div class="row container">
+        <div class="col">
+            <h1>Jugador 1 - <small>0</small></h1>
+            <div id="jugador-cartas">
+                <!--<img class="carta" src="assets/cartas/2C.png" alt="">-->
+            </div>
+        </div>
+    </div>
 
+    <div class="row container">
+        <div class="col">
+            <h1>Computadora - <small>0</small></h1>
+            <div id="computadora-cartas">
+            </div>
+        </div>
+    </div>
 
+    <script type="text/javascript" src="assets/js/underscore-min.js"></script>
     <script src="assets/js/juego.js"> </script>
 </body>
 
