@@ -16,6 +16,7 @@ let puntosComputadora = 0;
 // Jugador 1
 const btnPedir = document.querySelector('#btnPedir');
 const btnDetener = document.querySelector('#btnDetener');
+const btnNuevo = document.querySelector('#btnNuevo');
 const divCartasJugador = document.querySelector('#jugador-cartas');
 const divCartasComputadora = document.querySelector('#computadora-cartas');
 const puntosHTML = document.querySelectorAll('small'); 
@@ -56,8 +57,42 @@ const valorCarta = (carta) => {
 };
 
 // Turno de la computadora
+const turnoComputadora = (puntosMinimos) => {
+  do {
+    const carta = pedirCarta();
+    puntosComputadora =  puntosComputadora + valorCarta(carta);
+    puntosHTML[1].innerText = puntosComputadora;
+    
+    const imgCarta = document.createElement('img');
+    imgCarta.src = `assets/cartas/${carta}.png`;
+    imgCarta.classList.add('carta');
+    divCartasComputadora.append(imgCarta);
 
+    if(puntosMinimos > 21) {
+      break;
+    }
 
+  } while(puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+
+  setTimeout(() => {
+    let ganador;
+    
+    if (puntosComputadora > 21 || puntosJugador === 21) {
+      ganador = 'Jugador 1';
+    } else if (puntosJugador > 21 || puntosComputadora === 21) {
+      ganador = 'Computadora';
+    } else if (puntosJugador > puntosComputadora) {
+      ganador = 'Jugador 1';
+    } else if (puntosJugador < puntosComputadora) {
+      ganador = 'Computadora';
+    } else {
+      ganador = 'Nadie gana'; // Empate
+    }
+    
+    window.alert('Ganador: ' + ganador);
+  }, 100);
+
+}
 
 // Eventos
 btnPedir.addEventListener('click', () => {
@@ -71,16 +106,32 @@ btnPedir.addEventListener('click', () => {
   divCartasJugador.append(imgCarta);
   
   if(puntosJugador > 21) {
-    window.alert('PERDISTE XD');
     btnPedir.disabled = true; // Desactiva el botón
+    turnoComputadora(puntosJugador);
   } else if (puntosJugador === 21) {
     window.alert('21, geniasl!');
     btnPedir.disabled = true;
+    turnoComputadora(puntosJugador);
   }
 
 });
 
+btnDetener.addEventListener('click', () => {
+  btnPedir.disabled = true;
+  btnDetener.disabled = true;
+  turnoComputadora(puntosJugador);
+});
 
+btnNuevo.addEventListener('click', () => {
+  deck = [];
+  deck = creadDeck();
+  puntosComputadora = 0;
+  puntosJugador = 0;
+  puntosHTML[0].innerText = puntosJugador;
+  puntosHTML[1].innerText = puntosComputadora;
+  divCartasJugador.innerHTML = '';
+  divCartasComputadora.innerHTML = '';
+  btnDetener.disabled = false;
+  btnPedir.disabled = false;
+});
 
-
-turnoComputadora(12);
